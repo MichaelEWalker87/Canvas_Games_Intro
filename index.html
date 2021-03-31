@@ -17,15 +17,16 @@
       const PADDLE_DIST_FROM_EDGE = 60; 
       var paddleX = 400; // paddle placement 
 
-
+      var mouseX = 0; 
+      var mouseY = 0;
       var canvas, canvasContext;
 
       function updateMousePos(evt){
         var rect = canvas.getBoundingClientRect(); //give the postion on the page 
         var root = document.documentElement;  
 
-        var mouseX = evt.clientX - rect.left - root.scrollLeft; //client X is what they call the mouse cord
-        // var mouseY = evt.clientY - rect.top - root.scrollTop;
+        mouseX = evt.clientX - rect.left - root.scrollLeft; //client X is what they call the mouse cord
+        mouseY = evt.clientY - rect.top - root.scrollTop;
 
         paddleX = mouseX - PADDLE_WIDTH/2; //PADDLE_WIDTH/2 centers the paddle and mouse
       }
@@ -97,6 +98,8 @@
 
         colorRect(paddleX, canvas.height-PADDLE_DIST_FROM_EDGE, 
           PADDLE_WIDTH, PADDLE_THICKNESS, 'blue') //builds the paddle 
+
+        colorText(mouseX+","+mouseY, mouseX,mouseY, 'red')
       }
 
       function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
@@ -111,6 +114,10 @@
         canvasContext.fill()
       }
 
+      function colorText(showWords, textX, textY, fillColor){
+        canvasContext.fillStyle = fillColor;
+        canvasContext.fillText(showWords, textX, textY)
+      }
     </script>
   </body>
 </html>
