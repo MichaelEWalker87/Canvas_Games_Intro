@@ -12,6 +12,12 @@
       var ballSpeedX = 5; 
       var ballSpeedY = 7; 
 
+      const BRICK_W =100;
+      const BRICK_H = 50; 
+      const BRICK_COUNT = 14; 
+
+      var brickGrid = new Array(BRICK_COUNT);
+
       const PADDLE_WIDTH = 100; //all caps a an old C convention 
       const PADDLE_THICKNESS = 10;
       const PADDLE_DIST_FROM_EDGE = 60; 
@@ -30,6 +36,16 @@
 
         paddleX = mouseX - PADDLE_WIDTH/2; //PADDLE_WIDTH/2 centers the paddle and mouse
       }
+      
+      function brickRest(){
+        for(var i = 0; i < BRICK_COUNT; i++){
+          if(Math.random() < 0.5){
+            brickGrid[i] = true;
+          } else {
+            brickGrid[i] = false;
+          }
+        }
+      }// fills the array of bricks to true 
 
       window.onload = function() {
         canvas = document.getElementById('gameCanvas'); //gets the canvas tag from HTML
@@ -39,8 +55,10 @@
         setInterval(updateAll, 1000/framesPerSecond)// run the 
 
         canvas.addEventListener('mousemove', updateMousePos)
+        
+        brickRest()
       }
-
+      
       function updateAll() {
         moveAll();
         drawAll();
@@ -90,6 +108,15 @@
         }
       }
 
+      function drawBricks(){
+
+        for(var i =0; i < BRICK_COUNT; i++){
+          if(brickGrid[i]){
+            colorRect(BRICK_W*i,0, BRICK_W-2,BRICK_H, 'yellow')
+            //BRICK_W*i is the number of bricks, the --BRICK_W-2-- minus 2 allows for a small gap between bricks
+          }
+        }
+      }
 
       function drawAll() {
         colorRect(0,0, canvas.width,canvas.height,'black') //calls the background and clear screen
@@ -98,6 +125,8 @@
 
         colorRect(paddleX, canvas.height-PADDLE_DIST_FROM_EDGE, 
           PADDLE_WIDTH, PADDLE_THICKNESS, 'blue') //builds the paddle 
+
+        drawBricks();
 
         colorText(mouseX+","+mouseY, mouseX,mouseY, 'red')
       }
