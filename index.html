@@ -14,8 +14,9 @@
 
       const PADDLE_WIDTH = 100; //all caps a an old C convention 
       const PADDLE_THICKNESS = 10;
+      const PADDLE_DIST_FROM_EDGE = 60; 
       var paddleX = 400; // paddle placement 
-      
+
 
       var canvas, canvasContext;
 
@@ -62,20 +63,39 @@
         }//canvas.width will target the area of canvas
 
         if(ballY > canvas.height){ //bottom
-          //ballSpeedY *= -1;
           ballReset()
         }
+
         if(ballY < 0){ // top
           ballSpeedY *= -1;
         }
+
+        var paddleTopEdgeY = canvas.height-PADDLE_DIST_FROM_EDGE;
+        var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
+        var paddleLeftEdgeX = paddleX;
+        var paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
+
+        if( ballY > paddleTopEdgeY && // ball is below the top of paddle 
+          ballY < paddleBottomEdgeY && //above bottom of paddle 
+          ballX > paddleLeftEdgeX && // right of left side 
+          ballX < paddleRightEdgeX){ // left of right side of paddle
+            
+            ballSpeedY *= -1; //send the ball in an upward
+
+            // the next part will set the aim based on paddle hit 
+            var centerOfPaddleX = paddleX + PADDLE_WIDTH/2;
+            var ballDistFromPaddleCenterX = ballX - centerOfPaddleX;
+            ballSpeedX = ballDistFromPaddleCenterX * 0.35 //adjust the speed 
+        }
       }
+
 
       function drawAll() {
         colorRect(0,0, canvas.width,canvas.height,'black') //calls the background and clear screen
         
         colorCircle(ballX,ballY, 10, 'red') //calls the circle shape 
 
-        colorRect(paddleX, canvas.height-PADDLE_THICKNESS, 
+        colorRect(paddleX, canvas.height-PADDLE_DIST_FROM_EDGE, 
           PADDLE_WIDTH, PADDLE_THICKNESS, 'blue') //builds the paddle 
       }
 
