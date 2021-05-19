@@ -13,5 +13,10 @@ In the terminal run "open index.html"
 Create a functioning game using canvas
 
 
-### Project resource 
+### Project Resource 
 DeLeon, Chris. “How to Program Games: Tile Classics in JS for HTML5 Canvas.” Udemy, Udemy, www.udemy.com/course/how-to-program-games.
+
+### In Game Play:
+
+![In Game Gif](https://user-images.githubusercontent.com/54221369/118868249-34cc9400-b8a1-11eb-9a67-9cdf227fa570.gif)
+
